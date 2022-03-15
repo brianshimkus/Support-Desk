@@ -27,7 +27,8 @@
     "express": "^4.17.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.1"
+    "mongoose": "^6.2.1",
+    "react-router-dom": "^6.2.2-pre.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
