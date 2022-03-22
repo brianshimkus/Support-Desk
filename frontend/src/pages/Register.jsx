@@ -4,6 +4,7 @@ import { FaUser } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { register, reset } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
+import Spinner from '../components/Spinner'
 
 export default function Register() {
 	const [formData, setFormData] = useState({
@@ -55,6 +56,10 @@ export default function Register() {
 
 			dispatch(register(userData))
 		}
+	}
+
+	if (isLoading) {
+		return <Spinner />
 	}
 
 	return (
