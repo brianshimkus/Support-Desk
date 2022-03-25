@@ -39,7 +39,13 @@ const getTicket = asyncHandler(async (req, res) => {
 		throw new Error('Ticket not found')
 	}
 
-	res.status(200).json(tickets)
+	// Limit access to just the logged in user
+	if (ticket.user.toString() !== req.user.id) {
+		res.status(401)
+		throw new Error('Not authorized')
+	}
+
+	res.status(200).json(ticket)
 })
 
 // @desc: Create new ticket
@@ -71,4 +77,4 @@ const createTicket = asyncHandler(async (req, res) => {
 	res.status(201).json(ticket)
 })
 
-module.exports = { getTickets, createTicket }
+module.exports = { getTickets, getTicket, createTicket }
