@@ -20,6 +20,28 @@ const getTickets = asyncHandler(async (req, res) => {
 	res.status(200).json(tickets)
 })
 
+// @desc: Get user ticket
+// @route /api/tickets/:id
+// @access: Private
+const getTicket = asyncHandler(async (req, res) => {
+	// Get user
+	const user = await User.findById(req.user.id)
+
+	if (!user) {
+		res.status(401)
+		throw new Error('User not found')
+	}
+
+	const tickets = await Ticket.findById(req.params.id)
+
+	if (!ticket) {
+		res.status(404)
+		throw new Error('Ticket not found')
+	}
+
+	res.status(200).json(tickets)
+})
+
 // @desc: Create new ticket
 // @route /api/tickets
 // @access: Private
