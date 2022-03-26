@@ -32,7 +32,7 @@ const getTicket = asyncHandler(async (req, res) => {
 		throw new Error('User not found')
 	}
 
-	const tickets = await Ticket.findById(req.params.id)
+	const ticket = await Ticket.findById(req.params.id)
 
 	if (!ticket) {
 		res.status(404)
@@ -46,6 +46,43 @@ const getTicket = asyncHandler(async (req, res) => {
 	}
 
 	res.status(200).json(ticket)
+})
+
+// @desc: Update user ticket
+// @route PUT /api/tickets/:id
+// @access: Private
+const updateTicket = asyncHandler(async (req, res) => {
+	// Get user
+	const user = await User.findById(req.user.id)
+
+	if (!user) {
+		res.status(401)
+		throw new Error('User not found')
+	}
+
+	const ticket = await Ticket.findById(req.params.id)
+
+	if (!ticket) {
+		res.status(404)
+		throw new Error('Ticket not found')
+	}
+
+	// Limit access to just the logged in user
+	if (ticket.user.toString() !== req.user.id) {
+		res.status(401)
+		throw new Error('Not authorized')
+	}
+
+	const updatedTicket = await Ticket.findByIdAndUpdate(
+		req.params.id,
+		req.body,
+		{
+			new: true,
+			runValidators: true,
+		}
+	)
+
+	res.status(200).json(updatedTicket)
 })
 
 // @desc: Delete ticket
@@ -107,4 +144,10 @@ const createTicket = asyncHandler(async (req, res) => {
 	res.status(201).json(ticket)
 })
 
-module.exports = { getTickets, getTicket, createTicket, deleteTicket }
+module.exports = {
+	getTickets,
+	getTicket,
+	createTicket,
+	updateTicket,
+	deleteTicket,
+}
