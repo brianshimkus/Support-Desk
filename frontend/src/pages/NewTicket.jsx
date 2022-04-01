@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { BackButton } from '../components/BackButton'
 import Spinner from '../components/Spinner'
 import { reset } from '../features/auth/authSlice'
 import createTicket from '../features/tickets/ticketService'
@@ -43,6 +44,7 @@ export default function NewTicket() {
 
 	return (
 		<>
+			<BackButton url='/' />
 			<section className='heading'>
 				<h1>Create New Ticket</h1>
 				<p>Please fill out the form below</p>
