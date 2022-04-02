@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { BackButton } from '../components/BackButton'
+import { createTicket, reset } from '../features/tickets/ticketSlice'
 import Spinner from '../components/Spinner'
-import { reset } from '../features/auth/authSlice'
-import createTicket from '../features/tickets/ticketService'
+import BackButton from '../components/BackButton'
 
-export default function NewTicket() {
+function NewTicket() {
 	const { user } = useSelector((state) => state.auth)
 	const { isLoading, isError, isSuccess, message } = useSelector(
 		(state) => state.tickets
 	)
+
 	const [name] = useState(user.name)
 	const [email] = useState(user.email)
 	const [product, setProduct] = useState('iPhone')
@@ -91,3 +91,5 @@ export default function NewTicket() {
 		</>
 	)
 }
+
+export default NewTicket
