@@ -4,19 +4,19 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/userModel')
 
-// @desc: Register a new user
-// @route /api/users
-// @access: Public
+// @desc    Register a new user
+// @route   /api/users
+// @access  Public
 const registerUser = asyncHandler(async (req, res) => {
 	const { name, email, password } = req.body
 
 	// Validation
 	if (!name || !email || !password) {
 		res.status(400)
-		throw new Error('Please enter all fields')
+		throw new Error('Please include all fields')
 	}
 
-	// Check for existing user
+	// Find if user already exists
 	const userExists = await User.findOne({ email })
 
 	if (userExists) {
@@ -44,18 +44,19 @@ const registerUser = asyncHandler(async (req, res) => {
 		})
 	} else {
 		res.status(400)
-		throw new Error('Unable to create user')
+		throw new error('Invalid user data')
 	}
 })
 
-// @desc: Login a user
-// @route /api/login
-// @access: Public
+// @desc    Login a user
+// @route   /api/users/login
+// @access  Public
 const loginUser = asyncHandler(async (req, res) => {
 	const { email, password } = req.body
 
 	const user = await User.findOne({ email })
 
+	// Check user and passwords match
 	if (user && (await bcrypt.compare(password, user.password))) {
 		res.status(200).json({
 			_id: user._id,
@@ -69,9 +70,9 @@ const loginUser = asyncHandler(async (req, res) => {
 	}
 })
 
-// @desc: Get current user
-// @route /api/me
-// @access: Private
+// @desc    Get current user
+// @route   /api/users/me
+// @access  Private
 const getMe = asyncHandler(async (req, res) => {
 	const user = {
 		id: req.user._id,
@@ -84,7 +85,7 @@ const getMe = asyncHandler(async (req, res) => {
 // Generate token
 const generateToken = (id) => {
 	return jwt.sign({ id }, process.env.JWT_SECRET, {
-		expiresIn: process.env.JWT_EXPIRE,
+		expiresIn: '30d',
 	})
 }
 

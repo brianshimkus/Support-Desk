@@ -4,31 +4,31 @@ const API_URL = '/api/users/'
 
 // Register user
 const register = async (userData) => {
-	const res = await axios.post(API_URL, userData)
+	const response = await axios.post(API_URL, userData)
 
-	if (res.data) {
-		localStorage.setItem('user', JSON.stringify(res.data))
+	if (response.data) {
+		localStorage.setItem('user', JSON.stringify(response.data))
 	}
-
-	return res.data
+	return response.data
 }
 
-// Log in user
+// Login user
 const login = async (userData) => {
-	const res = await axios.post(API_URL + 'login', userData)
+	const response = await axios.post(API_URL + 'login', userData)
 
-	if (res.data) {
-		localStorage.setItem('user', JSON.stringify(res.data))
+	if (response.data) {
+		localStorage.setItem('user', JSON.stringify(response.data))
 	}
-
-	return res.data
+	return response.data
 }
 
-// Log out user
+// Logout user
 const logout = () => localStorage.removeItem('user')
 
-export const authService = {
+const authService = {
 	register,
 	logout,
 	login,
 }
+
+export default authService

@@ -43,8 +43,9 @@ export default function Register() {
 		}))
 	}
 
-	const onSubmit = async (e) => {
+	const onSubmit = (e) => {
 		e.preventDefault()
+
 		if (password !== password2) {
 			toast.error('Passwords do not match')
 		} else {
@@ -66,7 +67,7 @@ export default function Register() {
 		<>
 			<section className='heading'>
 				<h1>
-					<FaUser /> Register {user}
+					<FaUser /> Register
 				</h1>
 				<p>Please create an account</p>
 			</section>
@@ -93,7 +94,7 @@ export default function Register() {
 							name='email'
 							value={email}
 							onChange={onChange}
-							placeholder='Enter your email address'
+							placeholder='Enter your email'
 							required
 						/>
 					</div>
@@ -105,7 +106,7 @@ export default function Register() {
 							name='password'
 							value={password}
 							onChange={onChange}
-							placeholder='Enter your password'
+							placeholder='Enter password'
 							required
 						/>
 					</div>

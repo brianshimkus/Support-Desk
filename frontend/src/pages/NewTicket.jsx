@@ -49,17 +49,16 @@ export default function NewTicket() {
 				<h1>Create New Ticket</h1>
 				<p>Please fill out the form below</p>
 			</section>
+
 			<section className='form'>
 				<div className='form-group'>
 					<label htmlFor='name'>Customer Name</label>
 					<input type='text' className='form-control' value={name} disabled />
 				</div>
-
 				<div className='form-group'>
-					<label htmlFor='rmail'>Customer Email</label>
+					<label htmlFor='email'>Customer Email</label>
 					<input type='text' className='form-control' value={email} disabled />
 				</div>
-
 				<form onSubmit={onSubmit}>
 					<div className='form-group'>
 						<label htmlFor='product'>Product</label>
@@ -69,8 +68,9 @@ export default function NewTicket() {
 							value={product}
 							onChange={(e) => setProduct(e.target.value)}>
 							<option value='iPhone'>iPhone</option>
-							<option value='iPhone'>MacBook Pro</option>
-							<option value='iPhone'>iPad</option>
+							<option value='Macbook Pro'>Macbook Pro</option>
+							<option value='iMac'>iMac</option>
+							<option value='iPad'>iPad</option>
 						</select>
 					</div>
 					<div className='form-group'>

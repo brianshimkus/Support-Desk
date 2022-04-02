@@ -41,7 +41,7 @@ export default function Login() {
 		}))
 	}
 
-	const onSubmit = async (e) => {
+	const onSubmit = (e) => {
 		e.preventDefault()
 
 		const userData = {
@@ -75,7 +75,7 @@ export default function Login() {
 							name='email'
 							value={email}
 							onChange={onChange}
-							placeholder='Enter your email address'
+							placeholder='Enter your email'
 							required
 						/>
 					</div>
@@ -87,7 +87,7 @@ export default function Login() {
 							name='password'
 							value={password}
 							onChange={onChange}
-							placeholder='Enter your password'
+							placeholder='Enter password'
 							required
 						/>
 					</div>

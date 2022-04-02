@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import ticketService from './ticketService'
 
 const initialState = {
@@ -17,11 +17,13 @@ export const createTicket = createAsyncThunk(
 		try {
 			const token = thunkAPI.getState().auth.user.token
 			return await ticketService.createTicket(ticketData, token)
-		} catch (err) {
+		} catch (error) {
 			const message =
-				(err.res && err.res.data && err.res.data.message) ||
-				err.message ||
-				err.toString()
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString()
 
 			return thunkAPI.rejectWithValue(message)
 		}
@@ -35,11 +37,53 @@ export const getTickets = createAsyncThunk(
 		try {
 			const token = thunkAPI.getState().auth.user.token
 			return await ticketService.getTickets(token)
-		} catch (err) {
+		} catch (error) {
 			const message =
-				(err.res && err.res.data && err.res.data.message) ||
-				err.message ||
-				err.toString()
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString()
+
+			return thunkAPI.rejectWithValue(message)
+		}
+	}
+)
+
+// Get user ticket
+export const getTicket = createAsyncThunk(
+	'tickets/get',
+	async (ticketId, thunkAPI) => {
+		try {
+			const token = thunkAPI.getState().auth.user.token
+			return await ticketService.getTicket(ticketId, token)
+		} catch (error) {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString()
+
+			return thunkAPI.rejectWithValue(message)
+		}
+	}
+)
+
+// Close ticket
+export const closeTicket = createAsyncThunk(
+	'tickets/close',
+	async (ticketId, thunkAPI) => {
+		try {
+			const token = thunkAPI.getState().auth.user.token
+			return await ticketService.closeTicket(ticketId, token)
+		} catch (error) {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString()
 
 			return thunkAPI.rejectWithValue(message)
 		}
@@ -78,6 +122,27 @@ export const ticketSlice = createSlice({
 				state.isLoading = false
 				state.isError = true
 				state.message = action.payload
+			})
+			.addCase(getTicket.pending, (state) => {
+				state.isLoading = true
+			})
+			.addCase(getTicket.fulfilled, (state, action) => {
+				state.isLoading = false
+				state.isSuccess = true
+				state.ticket = action.payload
+			})
+			.addCase(getTicket.rejected, (state, action) => {
+				state.isLoading = false
+				state.isError = true
+				state.message = action.payload
+			})
+			.addCase(closeTicket.fulfilled, (state, action) => {
+				state.isLoading = false
+				state.tickets.map((ticket) =>
+					ticket._id === action.payload._id
+						? (ticket.status = 'closed')
+						: ticket
+				)
 			})
 	},
 })
