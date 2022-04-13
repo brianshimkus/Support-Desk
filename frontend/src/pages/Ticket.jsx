@@ -61,7 +61,6 @@ export default function Ticket() {
 					<h3>Description of Issue</h3>
 					<p>{ticket.description}</p>
 				</div>
-				<h2>Notes</h2>
 			</header>
 
 			{ticket.status !== 'closed' && (
