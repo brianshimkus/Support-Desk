@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTickets, reset } from '../features/tickets/ticketSlice'
 import Spinner from '../components/Spinner'
-import BackButton from '../components/BackButton'
 import TicketItem from '../components/TicketItem'
 
 export default function Tickets() {
@@ -29,20 +28,23 @@ export default function Tickets() {
 	}
 
 	return (
-		<>
-			<BackButton url='/' />
-			<h1>Tickets</h1>
-			<div className='tickets'>
-				<div className='ticket-headings'>
-					<div>Date</div>
-					<div>Product</div>
-					<div>Status</div>
-					<div></div>
-				</div>
+		<div className='container mx-auto px-4 text-center'>
+			<section className='mt-12 lg:mt-24 mb-12'>
+				<h1 className='text-4xl'>Tickets</h1>
+			</section>
+			<table className='table-auto mx-auto'>
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Product</th>
+						<th>Status</th>
+						<th></th>
+					</tr>
+				</thead>
 				{tickets.map((ticket) => (
 					<TicketItem key={ticket._id} ticket={ticket} />
 				))}
-			</div>
-		</>
+			</table>
+		</div>
 	)
 }
